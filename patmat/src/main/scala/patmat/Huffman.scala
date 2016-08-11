@@ -105,6 +105,8 @@ object Huffman {
     * of a leaf is the frequency of the character.
     */
   def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] = {
+    //todo: can solve this with pattern match?
+
     def loop(freqs: List[(Char, Int)], leafs: List[Leaf]): List[Leaf] = {
       if (freqs.isEmpty) leafs
       else if (leafs.head.weight < freqs.head._2) loop(freqs.tail, leafs ::: List(Leaf(freqs.head._1, freqs.head._2)))
@@ -118,7 +120,10 @@ object Huffman {
   /**
     * Checks whether the list `trees` contains only one single code tree.
     */
-  def singleton(trees: List[CodeTree]): Boolean = ???
+  def singleton(trees: List[CodeTree]): Boolean = trees match {
+    case t :: Nil => true
+    case _ => false
+  }
 
   /**
     * The parameter `trees` of this function is a list of code trees ordered
@@ -132,7 +137,10 @@ object Huffman {
     * If `trees` is a list of less than two elements, that list should be returned
     * unchanged.
     */
-  def combine(trees: List[CodeTree]): List[CodeTree] = ???
+  def combine(trees: List[CodeTree]): List[CodeTree] = trees match {
+    case Leaf(_,_,_) =>
+
+  }
 
   /**
     * This function will be called in the following way:
@@ -151,7 +159,7 @@ object Huffman {
     * the example invocation. Also define the return type of the `until` function.
     * - try to find sensible parameter names for `xxx`, `yyy` and `zzz`.
     */
-  def until(xxx: ???, yyy: ???)(zzz: ???): ??? = ???
+  def until(xxx: List[CodeTree] => Boolean, yyy: List[CodeTree] => List[CodeTree])(zzz: List[CodeTree]): ??? = ???
 
   /**
     * This function creates a code tree which is optimal to encode the text `chars`.
