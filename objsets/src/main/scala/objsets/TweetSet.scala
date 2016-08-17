@@ -69,7 +69,7 @@ abstract class TweetSet {
     * Question: Should we implment this method here, or should it remain abstract
     * and be implemented in the subclasses?
     */
-  def mostRetweeted: Tweet// = mostRetweetedAcc(this, tweet)
+  def mostRetweeted: Tweet = mostRetweetedAcc(this, tweet)
 
   /**
     * Returns a list containing all tweets of this set, sorted by retweet count
@@ -132,8 +132,6 @@ class Empty extends TweetSet {
 
   def isEmpty = true
 
-  override def mostRetweeted: Tweet = null
-
   def tweet = new Tweet("", "", 0)
 
   def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = acc
@@ -158,17 +156,6 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
   def isEmpty = false
 
   def tweet = elem
-
-  override def mostRetweeted: Tweet = {
-    val leftMax = left.mostRetweeted
-    val rightMax = right.mostRetweeted
-
-    def retweets(tweet: Tweet): Int = if (tweet == null) -1 else tweet.retweets
-
-    if(elem.retweets > retweets(leftMax ) && elem.retweets > retweets(rightMax)) this.elem
-    else if(retweets(leftMax) > retweets(rightMax)) leftMax
-    else rightMax
-  }
 
   def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = {
     if (p(elem)) {
@@ -271,4 +258,6 @@ object Main extends App {
 
   // Print the trending tweets
   GoogleVsApple.trending foreach println
+
+  //test
 }
